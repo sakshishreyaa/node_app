@@ -1,6 +1,6 @@
 const express = require('express')
 const Cart = require('../models/Cart')
-
+const mongoose = require('mongoose')
 const router = express.Router()
 router.get('/',(req,resp,next)=>{
     resp.status(200).json({message:"get carts"})
@@ -48,7 +48,20 @@ router.patch('/:cart_id',(req,resp,next)=>{
 /***********checkout / change cart status by adding address */
 
 router.delete('/:cart_id',(req,resp,next)=>{
-    resp.status(200).json({message:"deleted 1 cart "})
+    const id = req.params.cart_id
+    Cart.remove(id).exec().then(result => {
+        if (result) {
+            resp.status(200).json({ 
+                message: 'deleted cart' ,
+                data:result,
+        })
+        }
+        else {
+            resp.status(404).json({message:"not valid entry found"})
+        }
+    }).catch(err => {
+        resp.status(400).json({ message: err  })
+    })
 })
 
 module.exports = router
