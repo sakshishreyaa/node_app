@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const product_routes = require('./app/routes/products')
 const category_routes = require('./app/routes/categories')
 const user_routes = require('./app/routes/users')
+const cart_routes = require('./app/routes/carts')
 
 app.use(morgan('dev'))
 app.use('/uploads',express.static('uploads'))
@@ -19,6 +20,7 @@ app.use((req,resp,next)=> {
 app.use('/products',product_routes)
 app.use('/categories',category_routes)
 app.use('/users',user_routes)
+app.use('/carts',cart_routes)
 
 mongoose.connect('mongodb+srv://sakshi:sakshi@node-api.ivxrd.mongodb.net/node-rest-api?retryWrites=true&w=majority',{
     useMongoClient:true,
